@@ -7,3 +7,16 @@ export default function Home() {
     </main>
   )
 }
+
+
+export async function getServerSideProps(ctx){
+
+
+  
+
+  return {
+    props:{
+      data:null
+    }
+  }
+}

@@ -12,15 +12,10 @@ const openAiCompletion = async (message) => {
     try {
         const response = await openai.createChatCompletion({
             model: "gpt-3.5-turbo",
-            messages: [
-                // { role: "system", content: "answer as concisely as possible. act like chatgpt " },
-                { role: "user", content: "generate a 5 random sentence " }
-            ],
+            messages: message,
             
         });
-        console.log('====================================');
         console.log(response.data.choices[0].message.content);
-        console.log('====================================');
         return response.data.choices[0].message.content;
     }
     catch (error) {
@@ -38,7 +33,8 @@ export default async function handler(req, res) {
         res.status(405).json({ message: 'Only POST requests allowed' })
     }
 
-    const message =  "generate a 5 random sentence "
+    const message = req.body.message
+
     const data = await openAiCompletion(message);
     res.status(200).json({ data: data })
 }
